@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaviya Ravichandran - AI Engineer & NLP Researcher</title>
+<style>
+  :root {
+    --bg: #080c14;
+    --surface: #0d1420;
+    --card: #111827;
+    --border: rgba(99,102,241,0.18);
+    --primary: #818cf8;
+    --primary-dark: #6366f1;
+    --accent: #f472b6;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --faint: #334155;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(8,12,20,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo { font-weight: 800; font-size: 1.1rem; color: var(--primary); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: var(--muted); font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--primary); }
+  @media(max-width:680px){ .nav-links { display:none; } }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(99,102,241,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(244,114,182,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 0.78rem; font-weight: 700; color: var(--primary); letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -2px; color: #fff;
+    margin-bottom: 8px;
+  }
+  .hero h1 .name-color { color: var(--primary); }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--muted); font-weight: 400; margin-bottom: 24px;
+  }
+  .hero-subtitle strong { color: var(--text); font-weight: 600; }
+  .hero-desc {
+    max-width: 600px; font-size: 1rem; color: var(--muted); margin-bottom: 36px; line-height: 1.8;
+  }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--faint);
+    border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; color: var(--text);
+  }
+  .chip.p { border-color: rgba(99,102,241,0.4); color: var(--primary); background: rgba(99,102,241,0.08); }
+  .chip.g { border-color: rgba(52,211,153,0.4); color: var(--green); background: rgba(52,211,153,0.06); }
+  .chip.y { border-color: rgba(251,191,36,0.4); color: var(--yellow); background: rgba(251,191,36,0.06); }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary-dark); color: #fff;
+    border: none; border-radius: 10px; padding: 12px 24px;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--primary); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--faint); border-radius: 10px; padding: 12px 24px;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 24px 40px;
+  }
+  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  @media(max-width:640px){ .stats-inner { grid-template-columns: repeat(2,1fr); } }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--primary); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 40px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 20px; padding: 4px 14px; font-size: 0.75rem;
+    font-weight: 700; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: #fff; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 48px; max-width: 560px; }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+  .skill-card-title { font-size: 0.82rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .sp {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--faint);
+    border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; color: var(--text);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 180px 1fr;
+    gap: 0 32px; padding: 32px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  @media(max-width:680px){ .exp-item { grid-template-columns:1fr; } }
+  .exp-date { color: var(--muted); font-size: 0.83rem; font-weight: 600; padding-top: 4px; }
+  .exp-right {}
+  .exp-title { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 3px; }
+  .exp-company { font-size: 0.9rem; color: var(--primary); font-weight: 600; margin-bottom: 12px; }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li { color: var(--muted); font-size: 0.88rem; padding: 4px 0; padding-left: 16px; position: relative; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--primary); }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .et { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); border-radius: 6px; padding: 3px 9px; font-size: 0.75rem; color: var(--primary); }
+
+  /* ── PROJECTS ── */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 20px; }
+  .proj-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px; display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .proj-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary-dark), var(--accent));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .proj-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .proj-card:hover::before { opacity: 1; }
+  .proj-card.featured { border-color: rgba(99,102,241,0.4); }
+  .proj-card.featured::before { opacity: 1; }
+  .proj-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 700; border-radius: 20px; padding: 3px 10px;
+    margin-bottom: 14px; width: fit-content;
+  }
+  .badge-live { background: rgba(52,211,153,0.15); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
+  .badge-research { background: rgba(34,211,238,0.1); color: var(--cyan); border: 1px solid rgba(34,211,238,0.25); }
+  .badge-industry { background: rgba(251,191,36,0.1); color: var(--yellow); border: 1px solid rgba(251,191,36,0.25); }
+  .badge-ai { background: rgba(244,114,182,0.1); color: var(--accent); border: 1px solid rgba(244,114,182,0.25); }
+  .badge-portfolio { background: rgba(99,102,241,0.15); color: var(--primary); border: 1px solid rgba(99,102,241,0.3); }
+  .proj-title { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .proj-desc { font-size: 0.85rem; color: var(--muted); flex: 1; margin-bottom: 16px; line-height: 1.7; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .ps { background: rgba(255,255,255,0.04); border: 1px solid var(--faint); border-radius: 5px; padding: 3px 8px; font-size: 0.75rem; color: var(--muted); }
+  .proj-link { font-size: 0.8rem; color: var(--primary); text-decoration: none; font-weight: 600; }
+  .proj-link:hover { text-decoration: underline; }
+
+  /* ── FEATURED PROJ ── */
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  @media(max-width:720px){ .featured-grid { grid-template-columns:1fr; } }
+  .proj-card.large { grid-column: span 1; }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:640px){ .edu-grid { grid-template-columns:1fr; } }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+  }
+  .edu-degree { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .edu-school { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .edu-date { color: var(--muted); font-size: 0.82rem; }
+  .edu-detail { color: var(--muted); font-size: 0.83rem; margin-top: 10px; }
+  /* thesis */
+  .thesis-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(244,114,182,0.04));
+    border: 1px solid rgba(99,102,241,0.35); border-radius: 14px; padding: 26px 28px; margin-top: 20px;
+  }
+  .thesis-label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+  .thesis-title { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .thesis-body { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+  .thesis-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tm { display: inline-flex; gap: 6px; font-size: 0.8rem; }
+  .tm span:first-child { color: var(--muted); }
+  .tm span:last-child { color: var(--text); font-weight: 600; }
+  /* course table */
+  .course-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  @media(max-width:600px){ .course-grid { grid-template-columns:1fr; } }
+  .course-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px; padding: 9px 12px; font-size: 0.8rem;
+  }
+  .course-name { color: var(--muted); flex: 1; }
+  .course-grade {
+    font-weight: 800; font-size: 0.78rem; border-radius: 5px; padding: 2px 7px; margin-left: 10px;
+  }
+  .grade-excellent { background: rgba(52,211,153,0.15); color: var(--green); }
+  .grade-good { background: rgba(99,102,241,0.15); color: var(--primary); }
+  .grade-pass { background: rgba(255,255,255,0.07); color: var(--muted); }
+  .course-ects { color: var(--faint); font-size: 0.75rem; margin-left: 6px; }
+
+  /* ── AWARDS ── */
+  .award-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
+  .award-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .award-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .award-title { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .award-sub { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  .contact-bar {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(244,114,182,0.06) 100%);
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 20px; padding: 48px 40px; text-align: center;
+  }
+  .contact-bar h2 { font-size: 2rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
+  .contact-bar p { color: var(--muted); margin-bottom: 28px; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--faint);
+    border-radius: 10px; padding: 10px 20px;
+    color: var(--text); font-size: 0.88rem; font-weight: 600; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+  footer { text-align: center; padding: 30px 40px; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+
+  /* divider */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">KR.</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Available for full-time roles · Saarbrücken, Germany</div>
+    <h1>
+      <span class="name-color">Kaviya</span><br>Ravichandran
+    </h1>
+    <div class="hero-subtitle">
+      <strong>AI Engineer</strong> · NLP Researcher · MLOps · LLM Systems
+    </div>
+    <p class="hero-desc">
+      M.Sc. Data Science & AI @ Saarland University. Research Assistant building conversational AI platforms with real-world deployment. 2+ years at Walmart Global Tech. Co-founder of StudyClout. EXIST Women Scholar.
+    </p>
+    <div class="hero-chips">
+      <span class="chip p">🤖 LLMs & RAG</span>
+      <span class="chip p">🔬 NLP Research</span>
+      <span class="chip g">🚀 Production AI</span>
+      <span class="chip g">🐳 Docker · Azure</span>
+      <span class="chip y">📜 IEEE Published</span>
+      <span class="chip y">🏆 EXIST Scholar</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">2+</div>
+      <div class="stat-label">Years Industry Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">AI/ML Projects Built</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Research Publications</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">500M+</div>
+      <div class="stat-label">Records Processed (Walmart)</div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag">Technical Stack</div>
+    <h2 class="section-title">Skills & Technologies</h2>
+    <p class="section-sub">Full-stack AI engineer with expertise spanning research, engineering, and production deployment.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">🧠 AI / LLM / NLP</div>
+        <div class="skill-pills">
+          <span class="sp">LangChain</span><span class="sp">HuggingFace</span><span class="sp">OpenAI API</span>
+          <span class="sp">spaCy</span><span class="sp">Transformers</span><span class="sp">Dialogflow CX</span>
+          <span class="sp">RAG Pipelines</span><span class="sp">Prompt Engineering</span><span class="sp">Fine-tuning</span>
+          <span class="sp">Agentic AI</span><span class="sp">RAGAS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">⚙️ ML Frameworks</div>
+        <div class="skill-pills">
+          <span class="sp">PyTorch</span><span class="sp">scikit-learn</span><span class="sp">TensorFlow</span>
+          <span class="sp">NLTK</span><span class="sp">OpenCV</span><span class="sp">Pandas</span>
+          <span class="sp">NumPy</span><span class="sp">SHAP</span><span class="sp">MLflow</span>
+          <span class="sp">XGBoost</span><span class="sp">Sentence-Transformers</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">☁️ MLOps & Cloud</div>
+        <div class="skill-pills">
+          <span class="sp">Docker</span><span class="sp">CI/CD</span><span class="sp">Azure</span>
+          <span class="sp">AWS (S3, EC2)</span><span class="sp">Git</span><span class="sp">FastAPI</span>
+          <span class="sp">Django</span><span class="sp">Flask</span><span class="sp">WebSockets</span>
+          <span class="sp">Spark/Hive</span><span class="sp">GitHub Actions</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">💻 Languages & Data</div>
+        <div class="skill-pills">
+          <span class="sp">Python (Advanced)</span><span class="sp">SQL</span><span class="sp">Bash</span>
+          <span class="sp">JavaScript</span><span class="sp">REST APIs</span><span class="sp">Tableau</span>
+          <span class="sp">Power BI</span><span class="sp">asyncio</span><span class="sp">React</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">🔍 Vector & Retrieval</div>
+        <div class="skill-pills">
+          <span class="sp">ChromaDB</span><span class="sp">FAISS</span><span class="sp">Pinecone</span>
+          <span class="sp">Weaviate</span><span class="sp">Hybrid Search</span><span class="sp">BM25</span>
+          <span class="sp">Semantic Chunking</span><span class="sp">LlamaIndex</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">🌍 Multilingual NLP</div>
+        <div class="skill-pills">
+          <span class="sp">Multilingual-E5</span><span class="sp">mBERT</span><span class="sp">Cross-lingual IR</span>
+          <span class="sp">STT / TTS</span><span class="sp">NER</span><span class="sp">Intent Detection</span>
+          <span class="sp">German · English · Tamil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-tag">Career</div>
+    <h2 class="section-title">Work Experience</h2>
+    <p class="section-sub">Research, startups, and Fortune #1 enterprise - building real AI at every level.</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-date">Jun 2025 – Present</div>
+        <div class="exp-right">
+          <div class="exp-title">Student Research Assistant - Generative AI, NLP & LLM Systems</div>
+          <div class="exp-company">Saarland University · Prof. Dr. Stefan Morana · Germany</div>
+          <ul class="exp-bullets">
+            <li>Sole owner and end-to-end deliverer of <strong style="color:#fff;">SmartBot</strong> - a production conversational AI platform deployed on Azure: LLM bot creation (multi-provider), Dialogflow CX integration (STT/TTS), WebSocket-based real-time interface, token-based security, participant analytics</li>
+            <li>Designed and deployed a modular AI research platform (Django, Dialogflow CX, spaCy Transformers) supporting multilingual NLP evaluation; reusable LLM service components cut experiment setup time by ~60%</li>
+            <li>Developed 10+ intent detection pipelines and agentic AI components; applied prompt engineering, model evaluation frameworks, and telemetry logging for reproducible human-AI interaction research</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="et">Django</span><span class="et">Dialogflow CX</span><span class="et">Azure</span>
+            <span class="et">LLM APIs</span><span class="et">spaCy</span><span class="et">WebSockets</span><span class="et">asyncio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">Mar 2025 – Mar 2026</div>
+        <div class="exp-right">
+          <div class="exp-title">Co-Founder & Head of Product</div>
+          <div class="exp-company">StudyClout - EdTech AI Startup · Germany</div>
+          <ul class="exp-bullets">
+            <li>Architected and shipped a production AI platform in &lt;3 months: LLM-driven content generation, RAG-based retrieval, automated workflows, REST APIs, Docker deployments, and CI/CD pipelines</li>
+            <li>Led end-to-end product delivery from zero to live platform: roadmap, development execution, stakeholder communication, user growth, partnerships</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="et">RAG</span><span class="et">LangChain</span><span class="et">Docker</span>
+            <span class="et">FastAPI</span><span class="et">CI/CD</span><span class="et">Product Strategy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">Jul 2022 – Sep 2024</div>
+        <div class="exp-right">
+          <div class="exp-title">Technical Engineer</div>
+          <div class="exp-company">Walmart Global Tech · Chennai, India</div>
+          <ul class="exp-bullets">
+            <li>Designed and deployed 3 scalable ML pipelines on PySpark + Hive processing 500M+ records: automated feature engineering, model training, real-time prediction serving, Splunk monitoring</li>
+            <li>Implemented ML models to optimise operational workflows, delivering a measurable <strong style="color:#fff;">20% efficiency improvement</strong></li>
+            <li>Built Tableau dashboards for data-driven business insights; enhanced application UI through targeted debugging improvements</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="et">PySpark</span><span class="et">Hive</span><span class="et">Python</span>
+            <span class="et">Tableau</span><span class="et">ML Pipelines</span><span class="et">Splunk</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">2020 – 2022</div>
+        <div class="exp-right">
+          <div class="exp-title">Software Engineering Internships</div>
+          <div class="exp-company">Walmart Global Tech India · Anakin Technologies · Raisein Ventures · Innovalance</div>
+          <ul class="exp-bullets">
+            <li>Walmart: Developed supply chain dashboard with runtime prediction algorithm using ReactJS and Spring Boot</li>
+            <li>Raisein Ventures: Improved group facial recognition efficiency by 15% using ML models</li>
+            <li>Anakin Technologies: Advanced image classification system with data collection and model accuracy improvements</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="et">Python</span><span class="et">ReactJS</span><span class="et">Spring Boot</span><span class="et">ML</span><span class="et">Computer Vision</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag">Projects</div>
+    <h2 class="section-title">Featured Work</h2>
+    <p class="section-sub">Production systems, research platforms, and end-to-end AI pipelines - built and deployed.</p>
+
+    <!-- FEATURED -->
+    <div class="featured-grid">
+
+      <div class="proj-card featured">
+        <div class="proj-badge badge-live">🟢 Live · Azure Deployed</div>
+        <div class="proj-title">SmartBot - Full Conversational AI Platform</div>
+        <div class="proj-desc">Production multi-channel chatbot platform deployed on Azure: LLM bot creation with multi-provider API management, Dialogflow CX integration with intent graph visualisation and NLU training, Speech-to-Text + Text-to-Speech pipeline, WebSocket-based real-time interface with async backend, participant session tracking, token-based security, and conversation export (XLSX).</div>
+        <div class="proj-stack">
+          <span class="ps">Django</span><span class="ps">Python asyncio</span><span class="ps">Dialogflow CX</span>
+          <span class="ps">OpenAI API</span><span class="ps">WebSockets</span><span class="ps">Azure</span><span class="ps">STT/TTS</span>
+        </div>
+        <a href="https://chatform-aabqesdcbvd7crca.germanywestcentral01.azurewebsites.net" class="proj-link" target="_blank">↗ Live Demo</a>
+      </div>
+
+      <div class="proj-card featured">
+        <div class="proj-badge badge-live">🟢 Production · StudyClout</div>
+        <div class="proj-title">LLM Automation & RAG Platform</div>
+        <div class="proj-desc">End-to-end GenAI system for StudyClout: LangChain + OpenAI API for RAG-based content retrieval, agentic decision routing, structured output generation, and automated workflows. Deployed on Docker with full CI/CD pipeline, REST API layer, and usage telemetry. Shipped from scratch in under 3 months.</div>
+        <div class="proj-stack">
+          <span class="ps">LangChain</span><span class="ps">OpenAI API</span><span class="ps">RAG</span>
+          <span class="ps">Docker</span><span class="ps">CI/CD</span><span class="ps">FastAPI</span><span class="ps">Telemetry</span>
+        </div>
+        <a href="https://www.studyclout.com" class="proj-link" target="_blank">↗ studyclout.com</a>
+      </div>
+
+    </div>
+
+    <!-- ALL PROJECTS GRID -->
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-badge badge-research">🔬 Research · Saarland University</div>
+        <div class="proj-title">Multilingual NLP & Human-AI Interaction Platform</div>
+        <div class="proj-desc">Production research platform integrating Dialogflow CX and HuggingFace Transformers for cross-lingual intent detection and LLM evaluation. Modular microservice architecture with experiment tracking, quality monitoring, and model traceability. Supports multi-user workflows and reduced experiment setup time by 60%.</div>
+        <div class="proj-stack">
+          <span class="ps">HuggingFace</span><span class="ps">spaCy</span><span class="ps">Dialogflow</span>
+          <span class="ps">Django</span><span class="ps">MLflow</span><span class="ps">Multilingual NLP</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-industry">🏭 Industry · Walmart</div>
+        <div class="proj-title">Production ML Pipeline System</div>
+        <div class="proj-desc">Designed and deployed 3 scalable ML pipelines on PySpark + Hive for 500M+ records at Fortune #1 retail operations. Automated feature engineering, model training, real-time prediction serving, Splunk monitoring, and compliance documentation delivering 20% efficiency improvement.</div>
+        <div class="proj-stack">
+          <span class="ps">PySpark</span><span class="ps">Hive</span><span class="ps">Python</span>
+          <span class="ps">Splunk</span><span class="ps">ML Pipelines</span><span class="ps">Real-time Serving</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-ai">🤖 AI Research</div>
+        <div class="proj-title">AI Tutor System for Programming Education</div>
+        <div class="proj-desc">LLM-driven conversational tutoring agent with metacognitive scaffolding, emotion-aware response strategies, and explainable AI. Focused on human-AI interaction quality, self-regulated learning outcomes, and low-latency stateful conversation management.</div>
+        <div class="proj-stack">
+          <span class="ps">LLMs</span><span class="ps">Emotion AI</span><span class="ps">XAI</span>
+          <span class="ps">Conversational Agents</span><span class="ps">Python</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 ML Portfolio</div>
+        <div class="proj-title">Fraud Detection System with Explainability</div>
+        <div class="proj-desc">End-to-end fraud detection on financial data: XGBoost with SMOTE + class weight balancing for severe class imbalance, SHAP explainability for per-prediction reasoning, and FastAPI deployment endpoint. Includes a model card and bias analysis documentation.</div>
+        <div class="proj-stack">
+          <span class="ps">XGBoost</span><span class="ps">SHAP</span><span class="ps">SMOTE</span>
+          <span class="ps">FastAPI</span><span class="ps">scikit-learn</span><span class="ps">Pandas</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 NLP Portfolio</div>
+        <div class="proj-title">Semantic Job Recommender</div>
+        <div class="proj-desc">Input a resume - get the top-10 most relevant jobs ranked by semantic similarity. Uses sentence-transformers (all-MiniLM-L6-v2) and cosine similarity over a real job dataset. Deployed with a Streamlit UI. Demonstrates end-to-end NLP pipeline from text preprocessing to dense retrieval.</div>
+        <div class="proj-stack">
+          <span class="ps">Sentence-Transformers</span><span class="ps">FAISS</span><span class="ps">Streamlit</span>
+          <span class="ps">Pandas</span><span class="ps">Cosine Similarity</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 RAG Portfolio</div>
+        <div class="proj-title">Multilingual Document Q&A with Evaluation Suite</div>
+        <div class="proj-desc">RAG system handling documents in English, German, and Spanish. Supports PDF and URL input. Implements semantic chunking, hybrid search (BM25 + dense), multilingual-E5-large embeddings, and a RAGAS evaluation dashboard showing faithfulness, answer relevancy, and context recall metrics.</div>
+        <div class="proj-stack">
+          <span class="ps">multilingual-E5</span><span class="ps">ChromaDB</span><span class="ps">BM25</span>
+          <span class="ps">RAGAS</span><span class="ps">LangChain</span><span class="ps">Streamlit</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 GenAI Portfolio</div>
+        <div class="proj-title">AI Interview Coach</div>
+        <div class="proj-desc">Web app where users paste a job description + background → the AI generates role-specific interview questions, evaluates answers using STAR method, gives structured feedback with scores, and suggests improvements. Built with Claude/OpenAI API, structured JSON outputs, and deployed on Streamlit.</div>
+        <div class="proj-stack">
+          <span class="ps">OpenAI API</span><span class="ps">Structured Outputs</span><span class="ps">Prompt Engineering</span>
+          <span class="ps">Streamlit</span><span class="ps">STAR Method</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 Agentic AI</div>
+        <div class="proj-title">AI Job Application Agent</div>
+        <div class="proj-desc">LangGraph-powered agent that autonomously: searches job boards for matching roles, analyses each JD against a resume using RAG, generates tailored cover letters, drafts follow-up emails, and logs everything to a structured database. Full tool-use agent with persistent memory and conversation history.</div>
+        <div class="proj-stack">
+          <span class="ps">LangGraph</span><span class="ps">RAG</span><span class="ps">Tool Use</span>
+          <span class="ps">FastAPI</span><span class="ps">SQLite</span><span class="ps">LLM Agents</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 MLOps</div>
+        <div class="proj-title">Production ML System with Full MLOps</div>
+        <div class="proj-desc">Fraud detection model containerised with Docker, served via FastAPI, automated CI/CD with GitHub Actions, deployed to cloud with Evidently AI drift monitoring. Full README with architecture diagram and model card. A complete example of ML in production, not just a Jupyter notebook.</div>
+        <div class="proj-stack">
+          <span class="ps">Docker</span><span class="ps">GitHub Actions</span><span class="ps">Evidently AI</span>
+          <span class="ps">FastAPI</span><span class="ps">CI/CD</span><span class="ps">Data Drift</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">🌟 Anchor Project</div>
+        <div class="proj-title">Career Intelligence Platform</div>
+        <div class="proj-desc">Full-stack AI system: scrapes job postings → extracts skill requirements with NLP → maps against resume via RAG → generates tailored resume + cover letter → tracks applications → surfaces skill gaps. End-to-end pipeline combining NLP, RAG, agents, and MLOps in one deployable system.</div>
+        <div class="proj-stack">
+          <span class="ps">NLP</span><span class="ps">RAG</span><span class="ps">LangChain</span>
+          <span class="ps">LangGraph</span><span class="ps">FastAPI</span><span class="ps">Docker</span><span class="ps">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">🌟 Anchor Project</div>
+        <div class="proj-title">Multilingual Document Intelligence System</div>
+        <div class="proj-desc">Upload any document (PDF, DOCX, URL) in English/German/Spanish → automatic language detection → NER extraction → abstractive summarisation → RAG-powered Q&A → searchable knowledge base with RAGAS evaluation dashboard. Purpose-built for the European multilingual market.</div>
+        <div class="proj-stack">
+          <span class="ps">Multilingual NLP</span><span class="ps">RAG</span><span class="ps">NER</span>
+          <span class="ps">Vector DB</span><span class="ps">RAGAS</span><span class="ps">FastAPI</span><span class="ps">Streamlit</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-research">🔬 Computer Vision</div>
+        <div class="proj-title">Weather-Based Augmentation for Semantic Segmentation</div>
+        <div class="proj-desc">Improved semantic segmentation robustness using realistic fog, rain, and snow augmentations on the ACDC adverse-conditions dataset. Used DeepLabV3+ architecture with custom augmentation pipelines and evaluated performance degradation across weather conditions.</div>
+        <div class="proj-stack">
+          <span class="ps">PyTorch</span><span class="ps">DeepLabV3+</span><span class="ps">ACDC Dataset</span>
+          <span class="ps">Data Augmentation</span><span class="ps">Semantic Segmentation</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-ai">📜 IEEE Published</div>
+        <div class="proj-title">Cryptocurrency Recommender System</div>
+        <div class="proj-desc">ML-based recommendation engine combining FB Prophet for time series prediction with financial news sentiment analysis. Improved prediction accuracy by 15%. Published in IEEE - Predictive Analysis of Cryptocurrencies Using FB Prophet (E-CAST 2020).</div>
+        <div class="proj-stack">
+          <span class="ps">FB Prophet</span><span class="ps">ML</span><span class="ps">NLP</span>
+          <span class="ps">Sentiment Analysis</span><span class="ps">Time Series</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-ai">🤖 Embodied AI</div>
+        <div class="proj-title">Simmon - Smart Ordering Robot</div>
+        <div class="proj-desc">Embodied conversational AI system integrating a chatbot into a physical robot kiosk with facial recognition. Managed end-to-end delivery from prototype to demo - covering NLU, interaction design, and hardware-software integration for restaurant order automation.</div>
+        <div class="proj-stack">
+          <span class="ps">NLU</span><span class="ps">Face Recognition</span><span class="ps">Chatbot</span>
+          <span class="ps">Hardware Integration</span><span class="ps">Python</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge badge-portfolio">📦 NLP Portfolio</div>
+        <div class="proj-title">Responsible AI Chatbot with Guardrails</div>
+        <div class="proj-desc">Domain-specific chatbot (German university advisor) with comprehensive safety layer: input validation, output filtering, hallucination confidence scoring, out-of-scope refusal, prompt injection detection, and a safety evaluation suite. Full responsible AI documentation included.</div>
+        <div class="proj-stack">
+          <span class="ps">LLM APIs</span><span class="ps">Guardrails AI</span><span class="ps">Prompt Engineering</span>
+          <span class="ps">Safety Eval</span><span class="ps">Streamlit</span><span class="ps">Python</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-tag">Education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <p class="section-sub">Completed all M.Sc. coursework and master seminar in just 3 semesters - now focused full-time on thesis research.</p>
+
+    <div class="edu-grid">
+      <div class="edu-card" style="border-color: rgba(99,102,241,0.4);">
+        <div class="edu-degree">M.Sc. Data Science & Artificial Intelligence</div>
+        <div class="edu-school">Universität des Saarlandes · Saarbrücken, Germany</div>
+        <div class="edu-date">Oct 2024 – Present</div>
+        <div class="edu-detail" style="margin-top:10px;">
+          <span style="color:var(--green); font-weight:700;">79 ECTS completed · Overall Grade: 2.2 (Good)</span><br>
+          <span style="color:var(--muted);">All coursework and master seminar finished in 3 semesters. Currently working on master thesis. Funded by EXIST Women Scholarship (Federal Ministry, Germany).</span>
+        </div>
+        <div style="margin-top: 14px; display:flex; gap:12px; flex-wrap:wrap;">
+          <div style="font-size:0.8rem;"><span style="color:var(--muted);">ECTS Completed</span><br><span style="color:#fff; font-weight:800; font-size:1.1rem;">79</span></div>
+          <div style="font-size:0.8rem;"><span style="color:var(--muted);">Overall Grade</span><br><span style="color:#fff; font-weight:800; font-size:1.1rem;">2.2</span></div>
+          <div style="font-size:0.8rem;"><span style="color:var(--muted);">Best Grade</span><br><span style="color:var(--green); font-weight:800; font-size:1.1rem;">1.3 (HCI)</span></div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">B.E. Computer Science Engineering</div>
+        <div class="edu-school">Rajalakshmi Engineering College · Chennai, India</div>
+        <div class="edu-date">2018 – 2022</div>
+        <div class="edu-detail">CGPA: 9.23 / 10 - First Class with Distinction. IIC National Innovation Finalist 2020. 2 research publications during undergraduate studies.</div>
+        <div style="margin-top:14px;">
+          <div style="font-size:0.8rem;"><span style="color:var(--muted);">CGPA</span><br><span style="color:var(--yellow); font-weight:800; font-size:1.1rem;">9.23 / 10</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coursework -->
+    <div class="edu-card" style="margin-top: 20px;">
+      <div style="font-size:0.8rem; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:14px;">
+        M.Sc. Completed Coursework · Universität des Saarlandes
+      </div>
+      <div class="course-grid">
+        <div class="course-row"><span class="course-name">Statistical Natural Language Processing</span></div>
+        <div class="course-row"><span class="course-name">Neural Networks: Theory & Implementation</span></div>
+        <div class="course-row"><span class="course-name">Machine Translation</span></div>
+        <div class="course-row"><span class="course-name">Generative AI</span></div>
+        <div class="course-row"><span class="course-name">Trustworthy Machine Learning</span></div>
+        <div class="course-row"><span class="course-name">Elements of Machine Learning</span></div>
+        <div class="course-row"><span class="course-name">Human Computer Interaction</span></div>
+        <div class="course-row"><span class="course-name">High-Level Computer Vision</span></div>
+        <div class="course-row"><span class="course-name">Data-driven Understanding of Disinformation (CySec)</span></div>
+        <div class="course-row"><span class="course-name">Database Systems</span></div>
+        <div class="course-row"><span class="course-name">German as a Foreign Language (A1)</span></div>
+      </div>
+    </div>
+
+    <!-- Master Thesis -->
+    <div class="thesis-card">
+      <div class="thesis-label">🎓 Master Thesis · In Progress · DFKI</div>
+      <div class="thesis-title">Language-Aware Multilingual BERT: Explicit Language Conditioning for Encoder Models</div>
+      <div class="thesis-body">
+        Proposed and validated a novel sentence-level language conditioning approach for BERT-style encoders - the first systematic study of explicit language tokens in encoder-only models for low-resource and cross-lingual understanding tasks. Trained 6 model variants (3 from-scratch BERT-base + 3 XLM-R continued pretraining) on 1B+ tokens across 8 languages with training scaled up to 1M+ steps, achieving <strong style="color:#fff;">+9% XNLI accuracy</strong> and <strong style="color:#fff;">+9.8pp NER F1</strong> over baselines. Engineered a custom 50K BPE tokenizer - 2× smaller than mBERT with superior efficiency on Indic scripts - and a zero-shot centroid-based language ID system reaching <strong style="color:#fff;">92.7% accuracy</strong> (vs 12.5% baseline). Ablation studies revealed language tokens function as learned conditioning signals rather than predictable labels. Currently scaling to 50 languages for stronger cross-lingual generalisation results.
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;">
+        <span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--green);">+9% XNLI Accuracy</span>
+        <span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--green);">+9.8pp NER F1</span>
+        <span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--green);">92.7% Lang-ID Accuracy</span>
+        <span style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--primary);">1B+ Tokens · 8 Languages → 50</span>
+        <span style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--primary);">NVIDIA H200 · SLURM</span>
+        <span style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);border-radius:6px;padding:3px 9px;font-size:0.76rem;color:var(--primary);">XNLI · WikiANN · SIB-200 · FLORES</span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;">
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">PyTorch</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">HuggingFace Transformers</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">Accelerate</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">LoRA (PEFT)</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">WandB</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">FineWeb-2 / CC100</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">Custom BPE Tokenizer</span>
+        <span style="background:rgba(255,255,255,0.04);border:1px solid var(--faint);border-radius:5px;padding:3px 8px;font-size:0.76rem;color:var(--muted);">FastText</span>
+      </div>
+      <div class="thesis-meta">
+        <div class="tm"><span>Supervisor:</span><span>Dr. Simon Ostermann</span></div>
+        <div class="tm"><span>Lab:</span><span>DFKI – Multilinguality & Language Technology Group</span></div>
+        <div class="tm"><span>Period:</span><span>Oct 2025 – Present</span></div>
+        <div class="tm"><span>Status:</span><span style="color:var(--green);">✦ Scaling to 50 languages</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section style="background: var(--surface); padding-top: 0; padding-bottom: 80px;">
+  <div class="section-inner">
+    <div class="section-tag">Recognition</div>
+    <h2 class="section-title">Awards & Publications</h2>
+    <div class="award-grid" style="margin-top: 32px;">
+      <div class="award-card">
+        <div class="award-icon">🏅</div>
+        <div>
+          <div class="award-title">EXIST Women Scholarship</div>
+          <div class="award-sub">Federal Ministry for Economic Affairs and Climate Action · Germany</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <div>
+          <div class="award-title">Walmart Global Tech Bravo Award</div>
+          <div class="award-sub">2023 · Recognising exceptional performance and impact</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">📜</div>
+        <div>
+          <div class="award-title">IEEE Publication</div>
+          <div class="award-sub">Predictive Analysis of Cryptocurrencies Using FB Prophet · E-CAST 2020</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">📄</div>
+        <div>
+          <div class="award-title">E-CAST 2020 Publication</div>
+          <div class="award-sub">Implementation of IoT in Agriculture</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🥈</div>
+        <div>
+          <div class="award-title">IIC National Innovation Finalist</div>
+          <div class="award-sub">2020 · National-level innovation competition</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🐍</div>
+        <div>
+          <div class="award-title">PCEP Certified Python Programmer</div>
+          <div class="award-sub">PCEP-30-01 · Python Institute</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-bar">
+      <h2>Let's build something together</h2>
+      <p>Open to full-time roles in AI Engineering, NLP, and ML - based in Germany, open to EU remote.</p>
+      <div class="contact-links">
+        <a href="mailto:rkaviya311@gmail.com" class="contact-link">✉️ rkaviya311@gmail.com</a>
+        <a href="https://linkedin.com/in/kaviyaravichandran" class="contact-link" target="_blank">💼 LinkedIn</a>
+        <a href="https://www.studyclout.com" class="contact-link" target="_blank">🚀 StudyClout</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Kaviya Ravichandran · Saarbrücken, Germany · AI Engineer & NLP Researcher</p>
+  <p style="margin-top:6px; color:#475569;">Built with purpose · Open to opportunities across the EU</p>
+</footer>
+
+</body>
+</html>
